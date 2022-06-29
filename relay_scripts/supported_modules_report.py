@@ -38,16 +38,20 @@ for mod in modules:
 template = """# Module Repository Housekeeping Audit
 
 {%- if tag_module -%}
-## The following GitHub repositories appear to be missing the 'module' topic:
+## Missing `module` topic:
+
+The following GitHub repositories were detected as Puppet modules, but are missing the 'module' topic:
 
 {%- for item in tag_module %}
-* [{{ item['name'] }}](https://github.com/puppetlabs/{{ item['name'] }})
+* [puppetlabs/{{ item['name'] }}](https://github.com/puppetlabs/{{ item['name'] }})
 {%- endfor %}
 {%- endif %}
 {%- if incomplete %}
 
 
-## The following GitHub repositories should have topics clarifying which support tier they fall into:
+## Missing support tier topic:
+
+The following GitHub repositories should have topics clarifying which support tier they fall into.
 
 {%- for item in incomplete %}
 * [{{ item }}](https://github.com/{{ item }})
@@ -56,7 +60,10 @@ template = """# Module Repository Housekeeping Audit
 {%- if unmarked %}
 
 
-## The following GitHub repositories appear to be missing the support tier README note:
+## Missing README preamble:
+
+The following GitHub repositories do not have a properly formatted README preamble
+explaining what kind of support a user can expect from a module.
 
 {%- for item in unmarked %}
 * [{{ item }}](https://github.com/{{ item }})
@@ -68,7 +75,7 @@ template = """# Module Repository Housekeeping Audit
 ## The following Forge modules should be badged as Supported:
 
 {%- for item in badge_supported %}
-* [{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
+* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {%- endfor %}
 {%- endif %}
 {%- if badge_unsupported %}
@@ -77,7 +84,7 @@ template = """# Module Repository Housekeeping Audit
 ## The following Forge modules should have the Supported badge removed:
 
 {%- for item in badge_unsupported %}
-* [{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
+* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {%- endfor %}
 {%- endif %}
 {%- if source_field_problem %}
@@ -89,7 +96,7 @@ Either the field could not be parsed, or it does not point to a valid public rep
 within the org. Often this indicates that the repo has been archived into the Toy Chest.
 
 {%- for item in source_field_problem %}
-* [{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
+* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {%- endfor %}
 {%- endif %}
 """
