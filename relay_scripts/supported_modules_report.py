@@ -32,9 +32,12 @@ for mod in modules:
             badge_unsupported.append(mod)
 
     except (AttributeError,StopIteration) as e:
-        r = request.urlopen(mod['metadata']['source'])
-        if re.search('toy-chest', r.geturl()):
-            toy_chest.append(mod)
+        if str.starts_with(mod['metadata']['source'], 'http'):
+            r = request.urlopen(mod['metadata']['source'])
+            if re.search('toy-chest', r.geturl()):
+                toy_chest.append(mod)
+            else:
+                source_field_problem.append(mod)
         else:
             source_field_problem.append(mod)
 
