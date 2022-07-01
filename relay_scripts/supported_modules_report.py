@@ -35,7 +35,7 @@ for mod in modules:
         if str.startswith(mod['metadata']['source'], 'http'):
             r = request.urlopen(mod['metadata']['source'])
             if re.search('toy-chest', r.geturl()):
-                toy_chest.append(mod)
+                badge_adoptable.append(mod)
             else:
                 source_field_problem.append(mod)
         else:
