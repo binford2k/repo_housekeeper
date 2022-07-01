@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import re
+from urllib import request
 from jinja2 import Template
 from relay_sdk import Interface, Dynamic as D
 
@@ -14,6 +15,7 @@ tag_module = []
 badge_supported = []
 badge_unsupported = []
 source_field_problem = []
+badge_adoptable = []
 
 for mod in modules:
     try:
@@ -30,12 +32,27 @@ for mod in modules:
             badge_unsupported.append(mod)
 
     except (AttributeError,StopIteration) as e:
-        source_field_problem.append(mod)
+        r = request.urlopen(mod['metadata']['source'])
+        if re.search('toy-chest', r.geturl()):
+            toy_chest.append(mod)
+        else:
+            source_field_problem.append(mod)
 
     except Exception as e:
         print('Could not process module {0}: {1}'.format(mod['slug']))
 
 template = """# Module Repository Housekeeping Audit
+
+Quick Links:
+{%- if tag_module -%}* [Missing `module` topic](#missing-module-topic){%- endif -%}
+{%- if unmarked -%}* [Missing support tier topic](#missing-support-tier-topic){%- endif -%}
+{%- if incomplete -%}* [Missing README preamble](#missing-readme-preamble){%- endif -%}
+{%- if badge_supported -%}* [Add Supported badge](#add-supported-badge){%- endif -%}
+{%- if badge_unsupported -%}* [Remove Supported badge](#remove-supported-badge){%- endif -%}
+{%- if badge_adoptable -%}* [Add Adoptable badge](#add-adoptable-badge){%- endif -%}
+{%- if source_field_problem -%}* [Source field problem](#source-field-problem){%- endif -%}
+
+----
 
 {%- if tag_module -%}
 ## Missing `module` topic:
@@ -72,7 +89,9 @@ explaining what kind of support a user can expect from a module.
 {%- if badge_supported %}
 
 
-## The following Forge modules should be badged as Supported:
+## Add Supported badge
+
+The following Forge modules should be badged as Supported:
 
 {%- for item in badge_supported %}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
@@ -81,19 +100,33 @@ explaining what kind of support a user can expect from a module.
 {%- if badge_unsupported %}
 
 
-## The following Forge modules should have the Supported badge removed:
+## Remove Supported badge
+
+The following Forge modules should have the Supported badge removed:
 
 {%- for item in badge_unsupported %}
+* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
+{%- endfor %}
+{%- endif %}
+{%- if badge_adoptable %}
+
+
+## Add Adoptable badge
+
+The repositories for these modules have been archived into the Toy Chest and
+should be badged as Adoptable:
+
+{%- for item in badge_adoptable %}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {%- endfor %}
 {%- endif %}
 {%- if source_field_problem %}
 
 
-## The following Forge modules have a problem with their source field:
+## Source field problem
 
-Either the field could not be parsed, or it does not point to a valid public repo
-within the org. Often this indicates that the repo has been archived into the Toy Chest.
+The following Forge modules have a problem with their source field. Either the
+field could not be parsed, or it does not point to a valid public repo within the org.
 
 {%- for item in source_field_problem %}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
