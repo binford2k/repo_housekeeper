@@ -19,7 +19,6 @@ badge_adoptable = []
 
 for mod in modules:
     try:
-        print('Checking {0}...'.format(mod['slug']))
         reponame = re.search('github\.com[/:]puppetlabs\/([\w-]*)', mod['metadata']['source']).group(1)
         repo = next(x for x in repositories if x['name'] == reponame)
 
@@ -34,19 +33,13 @@ for mod in modules:
 
     except (AttributeError, StopIteration) as e:
         try:
-            print('...https://github.com/puppetlabs/{0} not found'.format(reponame))
-
             # try opening the URL just to follow any redirects
             r = request.urlopen('https://github.com/puppetlabs/{0}'.format(reponame))
             if re.search('toy-chest', r.geturl()):
-                print('https://github.com/puppetlabs/{0} is in the toy chest!'.format(reponame))
                 badge_adoptable.append(mod)
             else:
-                print('https://github.com/puppetlabs/{0} did not redirect'.format(reponame))
                 source_field_problem.append(mod)
         except Exception as e:
-            print('Problem with {0}'.format(reponame))
-            print(e)
             source_field_problem.append(mod)
 
     except Exception as e:
@@ -142,6 +135,6 @@ field could not be parsed, or it does not point to a valid public repo within th
 """
 
 tm = Template(template)
-report = tm.render(tag_module=tag_module, badge_supported=badge_supported, badge_unsupported=badge_unsupported, source_field_problem=source_field_problem, unmarked=unmarked, incomplete=incomplete)
+report = tm.render(tag_module=tag_module, badge_supported=badge_supported, badge_unsupported=badge_unsupported, badge_adoptable=badge_adoptable, source_field_problem=source_field_problem, unmarked=unmarked, incomplete=incomplete)
 
 relay.outputs.set('report', report)
