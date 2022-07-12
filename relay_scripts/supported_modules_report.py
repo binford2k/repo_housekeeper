@@ -19,6 +19,7 @@ badge_adoptable = []
 
 for mod in modules:
     try:
+        print('Checking {0}...'.format(mod['slug']))
         reponame = re.search('github\.com[/:]puppetlabs\/([\w-]*)', mod['metadata']['source']).group(1)
         repo = next(x for x in repositories if x['name'] == reponame)
 
@@ -31,8 +32,10 @@ for mod in modules:
         if mod['endorsement'] == 'supported' and not 'supported' in repo['topics']:
             badge_unsupported.append(mod)
 
-    except (AttributeError,StopIteration) as e:
+    except (AttributeError, StopIteration) as e:
         try:
+            print('...https://github.com/puppetlabs/{0} not found'.format(reponame))
+
             # try opening the URL just to follow any redirects
             r = request.urlopen('https://github.com/puppetlabs/{0}'.format(reponame))
             if re.search('toy-chest', r.geturl()):
