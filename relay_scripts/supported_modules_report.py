@@ -39,6 +39,7 @@ for mod in modules:
             # try opening the URL just to follow any redirects
             r = request.urlopen('https://github.com/puppetlabs/{0}'.format(reponame))
             if re.search('toy-chest', r.geturl()):
+                print('https://github.com/puppetlabs/{0} is in the toy chest!'.format(reponame))
                 badge_adoptable.append(mod)
             else:
                 print('https://github.com/puppetlabs/{0} did not redirect'.format(reponame))
