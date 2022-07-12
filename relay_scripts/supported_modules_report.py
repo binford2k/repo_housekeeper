@@ -38,7 +38,7 @@ for mod in modules:
                 badge_adoptable.append(mod)
             else:
                 source_field_problem.append(mod)
-        except Exception as e:
+        except HTTPError as e:
             source_field_problem.append(mod)
 
     except Exception as e:
