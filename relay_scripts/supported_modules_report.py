@@ -38,23 +38,22 @@ for mod in modules:
             if re.search('toy-chest', r.geturl()):
                 badge_adoptable.append(mod)
             else:
+                print('https://github.com/puppetlabs/{0} did not redirect'.format(reponame))
                 source_field_problem.append(mod)
         except Exception as e:
+            print('Problem with {0}'.format(reponame))
+            print(e)
             source_field_problem.append(mod)
 
     except Exception as e:
-        print('Could not process module {0}: {1}'.format(mod['slug']))
+        print('Could not process module {0}'.format(mod['slug']))
 
 template = """# Module Repository Housekeeping Audit
 
-Quick Links:
-{%- if tag_module -%}* [Missing `module` topic](#missing-module-topic){%- endif -%}
-{%- if unmarked -%}* [Missing support tier topic](#missing-support-tier-topic){%- endif -%}
-{%- if incomplete -%}* [Missing README preamble](#missing-readme-preamble){%- endif -%}
-{%- if badge_supported -%}* [Add Supported badge](#add-supported-badge){%- endif -%}
-{%- if badge_unsupported -%}* [Remove Supported badge](#remove-supported-badge){%- endif -%}
-{%- if badge_adoptable -%}* [Add Adoptable badge](#add-adoptable-badge){%- endif -%}
-{%- if source_field_problem -%}* [Source field problem](#source-field-problem){%- endif -%}
+The following modules are out of compliance with our module support policy. Each
+repository should have a topic and a `README` note describing its support tier and
+should have a `CODEOWNERS` file identifying the engineering team responsible for it.
+See <not yet published> for details.
 
 ----
 
