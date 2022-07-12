@@ -33,12 +33,13 @@ for mod in modules:
 
     except (AttributeError,StopIteration) as e:
         try:
-            r = request.urlopen(mod['metadata']['source'])
+            # try opening the URL just to follow any redirects
+            r = request.urlopen('https://github.com/puppetlabs/{0}'.format(reponame))
             if re.search('toy-chest', r.geturl()):
                 badge_adoptable.append(mod)
             else:
                 source_field_problem.append(mod)
-        except HTTPError as e:
+        except Exception as e:
             source_field_problem.append(mod)
 
     except Exception as e:
