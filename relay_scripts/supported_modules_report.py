@@ -18,6 +18,9 @@ source_field_problem = []
 badge_adoptable = []
 
 for mod in modules:
+    if mod['deprecated_at']:
+        continue
+
     try:
         reponame = re.search('github\.com[/:]puppetlabs\/([\w-]*)', mod['metadata']['source']).group(1)
         repo = next(x for x in repositories if x['name'] == reponame)
