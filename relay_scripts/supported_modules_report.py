@@ -18,7 +18,7 @@ source_field_problem = []
 badge_adoptable = []
 
 for mod in modules:
-    if 'deprecated_at' in mod.keys():
+    if mod['deprecated_at']:
         continue
 
     try:
