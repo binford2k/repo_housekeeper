@@ -7,7 +7,7 @@ modules = []
 unsupported = []
 incomplete = []
 
-known = ['supported', 'unsupported', 'trusted-contributor', 'maintenance-mode', 'community', 'experimental', 'demo']
+known = ['supported', 'unsupported', 'trusted-contributor', 'maintenance-mode', 'community', 'education', 'experimental', 'demo']
 
 for repo in relay.get(D.repositories):
     try:
