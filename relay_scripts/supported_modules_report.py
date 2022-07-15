@@ -158,6 +158,6 @@ through to inspect the errors using GitHub's interface:
 """
 
 tm = Template(template)
-report = tm.render(tag_module=tag_module, badge_supported=badge_supported, badge_unsupported=badge_unsupported, badge_adoptable=badge_adoptable, source_field_problem=source_field_problem, unmarked=unmarked, incomplete=incomplete)
+report = tm.render(tag_module=tag_module, badge_supported=badge_supported, badge_unsupported=badge_unsupported, badge_adoptable=badge_adoptable, source_field_problem=source_field_problem, unmarked=unmarked, incomplete=incomplete, unowned=unowned)
 
 relay.outputs.set('report', report)
