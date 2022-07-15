@@ -11,6 +11,9 @@ repositories = relay.get(D.repositories)
 unmarked = relay.get(D.unmarked)
 incomplete = relay.get(D.incomplete)
 
+# this doesn't really fit here, but for now...
+unowned = relay.get(D.unowned)
+
 tag_module = []
 badge_supported = []
 badge_unsupported = []
@@ -138,6 +141,18 @@ field could not be parsed, or it does not point to a valid public repo within th
 
 {%- for item in source_field_problem %}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
+{%- endfor %}
+{%- endif %}
+{%- if unowned %}
+
+
+## GitHub: Repositories without valid CODEOWNERS
+
+The following GitHub repositories have problems with their CODEOWNERS files. Click
+through to inspect the errors using GitHub's interface:
+
+{%- for item in unowned %}
+* [puppetlabs-{{ item }}](https://github.com/puppetlabs/{{ item }})
 {%- endfor %}
 {%- endif %}
 """
