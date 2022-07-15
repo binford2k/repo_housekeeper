@@ -17,6 +17,8 @@ badge_unsupported = []
 source_field_problem = []
 badge_adoptable = []
 
+premium_content = [ 'cem_linux', 'cem_windows' ]
+
 for mod in modules:
     if mod['deprecated_at']:
         continue
@@ -35,6 +37,9 @@ for mod in modules:
             badge_unsupported.append(mod)
 
     except (AttributeError, StopIteration) as e:
+        if reponame in premium_content:
+            continue
+
         try:
             # try opening the URL just to follow any redirects
             r = request.urlopen('https://github.com/puppetlabs/{0}'.format(reponame))
@@ -58,7 +63,7 @@ See <not yet published> for details.
 ----
 
 {%- if tag_module -%}
-## Missing `module` topic:
+## GitHub: Missing `module` topic:
 
 The following GitHub repositories were detected as Puppet modules, but are missing the 'module' topic:
 
@@ -69,7 +74,7 @@ The following GitHub repositories were detected as Puppet modules, but are missi
 {%- if incomplete %}
 
 
-## Missing support tier topic:
+## GitHub: Missing support tier topic:
 
 The following GitHub repositories should have topics clarifying which support tier they fall into.
 
@@ -80,7 +85,7 @@ The following GitHub repositories should have topics clarifying which support ti
 {%- if unmarked %}
 
 
-## Missing README preamble:
+## GitHub: Missing README preamble:
 
 The following GitHub repositories do not have a properly formatted README preamble
 explaining what kind of support a user can expect from a module.
@@ -92,7 +97,7 @@ explaining what kind of support a user can expect from a module.
 {%- if badge_supported %}
 
 
-## Add Supported badge
+## Forge: Add Supported badge
 
 The following Forge modules should be badged as Supported:
 
@@ -103,7 +108,7 @@ The following Forge modules should be badged as Supported:
 {%- if badge_unsupported %}
 
 
-## Remove Supported badge
+## Forge: Remove Supported badge
 
 The following Forge modules should have the Supported badge removed:
 
@@ -114,7 +119,7 @@ The following Forge modules should have the Supported badge removed:
 {%- if badge_adoptable %}
 
 
-## Add Adoptable badge
+## Forge: Add Adoptable badge
 
 The repositories for these modules have been archived into the Toy Chest and
 should be badged as Adoptable:
@@ -126,7 +131,7 @@ should be badged as Adoptable:
 {%- if source_field_problem %}
 
 
-## Source field problem
+## Forge: Source field problem
 
 The following Forge modules have a problem with their source field. Either the
 field could not be parsed, or it does not point to a valid public repo within the org.
