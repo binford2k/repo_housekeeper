@@ -56,104 +56,172 @@ for mod in modules:
     except Exception as e:
         print('Could not process module {0}'.format(mod['slug']))
 
-template = """# Module Repository Housekeeping Audit
+template = """# Open Source Housekeeping Audit
 
-The following modules are out of compliance with our module support policy. Each
-repository should have a topic and a `README` note describing its support tier and
-should have a `CODEOWNERS` file identifying the engineering team responsible for it.
-See <not yet published> for details.
+Puppet's Open Source Stewards group conducts a regular audit of our public GitHub
+namespace and our Puppet Forge namespace for modules and repositories that do not
+meet our standards and policies. This report contains content which is out of
+compliance and should be either removed or corrected.
+
+Expand each section to find a list of repositories that failed each check,
+information about the check itself, and suggestions for remediating it.
+
+If the repository is no longer useful, then use these heuristics to decide what
+to do with it:
+
+* If anyone else might find practical use or learning opportunities, then bin
+  the repository into the [Toy Chest](http://github.com/puppetlabs-toy-chest/)
+  to mark it as adoptable.
+* If the repository has no use to anyone, then simply delete it.
+
+See `{not yet published}` for details about our housekeeping standards.
 
 ----
 
 {%- if tag_module -%}
-## GitHub: Missing `module` topic:
+<details>
+<summary>
+## GitHub: Module repository missing `module` topic:
+</summary>
 
-The following GitHub repositories were detected as Puppet modules, but are missing the 'module' topic:
+Module repositories should be indicated with the `module` topic. The following
+repositories were detected as Puppet modules, but are missing that topic.
+
+Please add the topic to any repositories t
 
 {%- for item in tag_module %}
 * [puppetlabs/{{ item['name'] }}](https://github.com/puppetlabs/{{ item['name'] }})
 {%- endfor %}
+</details>
 {%- endif %}
+
+
 {%- if incomplete %}
+<details>
+<summary>
+## GitHub: Module repositories missing support tier topic:
+</summary>
 
-
-## GitHub: Missing support tier topic:
-
-The following GitHub repositories should have topics clarifying which support tier they fall into.
+Modules in the Puppetlabs namespace have different support expectations. Each module
+repository should have a topic identifying which support tier it falls into. The
+following GitHub repositories are missing their support tier topics and should
+have them added.
 
 {%- for item in incomplete %}
 * [{{ item }}](https://github.com/{{ item }})
 {%- endfor %}
+</details>
 {%- endif %}
+
+
 {%- if unmarked %}
+<details>
+<summary>
+## GitHub: Module repositories missing README preamble:
+</summary>
 
+Modules in the Puppetlabs namespace have different support expectations. Each module
+should have a properly formatted `README` preamble explaining what kind of support
+a user can expect when using that module.
 
-## GitHub: Missing README preamble:
-
-The following GitHub repositories do not have a properly formatted README preamble
-explaining what kind of support a user can expect from a module.
+The following GitHub repositories should have a preamble added to their `README`.
 
 {%- for item in unmarked %}
 * [{{ item }}](https://github.com/{{ item }})
 {%- endfor %}
+</details>
 {%- endif %}
-{%- if badge_supported %}
 
 
-## Forge: Add Supported badge
-
-The following Forge modules should be badged as Supported:
-
-{%- for item in badge_supported %}
-* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
-{%- endfor %}
-{%- endif %}
-{%- if badge_unsupported %}
-
-
-## Forge: Remove Supported badge
-
-The following Forge modules should have the Supported badge removed:
-
-{%- for item in badge_unsupported %}
-* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
-{%- endfor %}
-{%- endif %}
-{%- if badge_adoptable %}
-
-
-## Forge: Add Adoptable badge
-
-The repositories for these modules have been archived into the Toy Chest and
-should be badged as Adoptable:
-
-{%- for item in badge_adoptable %}
-* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
-{%- endfor %}
-{%- endif %}
-{%- if source_field_problem %}
-
-
-## Forge: Source field problem
-
-The following Forge modules have a problem with their source field. Either the
-field could not be parsed, or it does not point to a valid public repo within the org.
-
-{%- for item in source_field_problem %}
-* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
-{%- endfor %}
-{%- endif %}
 {%- if unowned %}
+<details>
+<summary>
+## GitHub: Invalid CODEOWNERS files
+</summary>
 
+All public repositories in the `puppetlabs` namespace should have valid `CODEOWNERS`
+clearly showing ownership and responsibilities. This allows us to automatically
+assign pull request reviews and makes it easier to identify teams responsible for
+a project.
 
-## GitHub: Repositories without valid CODEOWNERS
-
-The following GitHub repositories have problems with their CODEOWNERS files. Click
-through to inspect the errors using GitHub's interface:
+The following GitHub repositories have problems with their `CODEOWNERS` files. Click
+through to inspect the errors using GitHub's interface and it will offer suggestions
+on how to resolve problems.
 
 {%- for item in unowned %}
 * [puppetlabs-{{ item }}](https://github.com/puppetlabs/{{ item }})
 {%- endfor %}
+</details>
+{%- endif %}
+
+
+{%- if badge_supported %}
+<details>
+<summary>
+## Forge: Add Supported badge
+</summary>
+
+Forge module pages should match the topics on their corresponding repositories.
+The following Forge modules should be badged as Supported.
+
+{%- for item in badge_supported %}
+* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
+{%- endfor %}
+</details>
+{%- endif %}
+
+
+{%- if badge_unsupported %}
+<details>
+<summary>
+## Forge: Remove Supported badge
+</summary>
+
+Forge module pages should match the topics on their corresponding repositories.
+The following Forge modules should have the Supported badge removed.
+
+{%- for item in badge_unsupported %}
+* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
+{%- endfor %}
+</details>
+{%- endif %}
+
+
+{%- if badge_adoptable %}
+<details>
+<summary>
+## Forge: Add Adoptable badge
+</summary>
+
+The repositories for these modules have been archived into the Toy Chest, so their
+Forge pages should be badged as `Adoptable`.
+
+{%- for item in badge_adoptable %}
+* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
+{%- endfor %}
+</details>
+{%- endif %}
+
+
+{%- if source_field_problem %}
+<details>
+<summary>
+## Forge: Source field problem
+</summary>
+
+Our standards for the `source` key in `metadata.json` is to point to the HTML url
+of the GitHub repository containing module source. The following Forge modules do
+not match that expectation. Either the field could not be parsed, or it does not
+point to a valid public repo within the org. Sometimes this happens when another
+developer takes ownership of a module and the Forge page isn't updated to match.
+
+Correct the field for any modules we own, and deprecate as appropriate any modules
+we no longer own.
+
+{%- for item in source_field_problem %}
+* [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
+{%- endfor %}
+</details>
 {%- endif %}
 """
 
