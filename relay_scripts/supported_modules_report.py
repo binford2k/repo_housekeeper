@@ -78,7 +78,7 @@ See `{not yet published}` for details about our housekeeping standards.
 
 ----
 
-{%- if tag_module -%}
+{% if tag_module -%}
 ## GitHub: Module repository missing `module` topic
 
 <details>
@@ -87,14 +87,14 @@ Module repositories should be indicated with the `module` topic. The following
 repositories were detected as Puppet modules, but are missing that topic.
 </summary>
 
-{%- for item in tag_module %}
+{% for item in tag_module -%}
 * [puppetlabs/{{ item['name'] }}](https://github.com/puppetlabs/{{ item['name'] }})
 {%- endfor %}
 </details>
 {%- endif %}
 
 
-{%- if incomplete %}
+{% if incomplete -%}
 ## GitHub: Module repositories missing support tier topic
 
 <details>
@@ -105,14 +105,14 @@ following GitHub repositories are missing their support tier topics and should
 have them added.
 </summary>
 
-{%- for item in incomplete %}
+{% for item in incomplete -%}
 * [{{ item }}](https://github.com/{{ item }})
 {%- endfor %}
 </details>
 {%- endif %}
 
 
-{%- if unmarked %}
+{% if unmarked -%}
 ## GitHub: Module repositories missing README preamble
 
 <details>
@@ -124,14 +124,14 @@ a user can expect when using that module.
 The following GitHub repositories should have a preamble added to their `README`.
 </summary>
 
-{%- for item in unmarked %}
+{% for item in unmarked -%}
 * [{{ item }}](https://github.com/{{ item }})
 {%- endfor %}
 </details>
 {%- endif %}
 
 
-{%- if unowned %}
+{% if unowned -%}
 ## GitHub: Invalid CODEOWNERS files
 
 <details>
@@ -146,14 +146,14 @@ through to inspect the errors using GitHub's interface and it will offer suggest
 on how to resolve problems.
 </summary>
 
-{%- for item in unowned %}
+{% for item in unowned -%}
 * [puppetlabs-{{ item }}](https://github.com/puppetlabs/{{ item }}/blob/-/CODEOWNERS)
 {%- endfor %}
 </details>
 {%- endif %}
 
 
-{%- if badge_supported %}
+{% if badge_supported -%}
 ## Forge: Add Supported badge
 
 <details>
@@ -162,14 +162,14 @@ Forge module pages should match the topics on their corresponding repositories.
 The following Forge modules should be badged as Supported.
 </summary>
 
-{%- for item in badge_supported %}
+{% for item in badge_supported -%}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {%- endfor %}
 </details>
 {%- endif %}
 
 
-{%- if badge_unsupported %}
+{% if badge_unsupported -%}
 ## Forge: Remove Supported badge
 
 <details>
@@ -180,12 +180,12 @@ The following Forge modules should have the Supported badge removed.
 
 {%- for item in badge_unsupported %}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
-{%- endfor %}
+{% endfor -%}
 </details>
 {%- endif %}
 
 
-{%- if badge_adoptable %}
+{% if badge_adoptable -%}
 ## Forge: Add Adoptable badge
 <details>
 <summary>
@@ -200,7 +200,7 @@ Forge pages should be badged as `Adoptable`.
 {%- endif %}
 
 
-{%- if source_field_problem %}
+{% if source_field_problem -%}
 ## Forge: Source field problem
 
 <details>
