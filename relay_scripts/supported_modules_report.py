@@ -89,9 +89,9 @@ repositories were detected as Puppet modules, but are missing that topic.
 
 {% for item in tag_module -%}
 * [puppetlabs/{{ item['name'] }}](https://github.com/puppetlabs/{{ item['name'] }})
-{%- endfor %}
+{% endfor -%}
 </details>
-{%- endif %}
+{% endif -%}
 
 
 {% if incomplete -%}
@@ -107,9 +107,9 @@ have them added.
 
 {% for item in incomplete -%}
 * [{{ item }}](https://github.com/{{ item }})
-{%- endfor %}
+{% endfor -%}
 </details>
-{%- endif %}
+{% endif -%}
 
 
 {% if unmarked -%}
@@ -117,7 +117,6 @@ have them added.
 
 <details>
 <summary>
-
 Modules in the Puppetlabs namespace have different support expectations. Each module
 should have a properly formatted `README` preamble explaining what kind of support
 a user can expect when using that module.
@@ -127,7 +126,7 @@ The following GitHub repositories should have a preamble added to their `README`
 
 {% for item in unmarked -%}
 * [{{ item }}](https://github.com/{{ item }})
-{%- endfor %}
+{% endfor -%}
 </details>
 {%- endif %}
 
@@ -150,9 +149,9 @@ on how to resolve problems.
 
 {% for item in unowned -%}
 * [puppetlabs-{{ item }}](https://github.com/puppetlabs/{{ item }}/blob/-/CODEOWNERS)
-{%- endfor %}
+{% endfor -%}
 </details>
-{%- endif %}
+{% endif -%}
 
 
 {% if badge_supported -%}
@@ -166,9 +165,9 @@ The following Forge modules should be badged as Supported.
 
 {% for item in badge_supported -%}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
-{%- endfor %}
+{% endfor -%}
 </details>
-{%- endif %}
+{% endif -%}
 
 
 {% if badge_unsupported -%}
@@ -184,23 +183,22 @@ The following Forge modules should have the Supported badge removed.
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {% endfor -%}
 </details>
-{%- endif %}
+{% endif -%}
 
 
 {% if badge_adoptable -%}
 ## Forge: Add Adoptable badge
 <details>
 <summary>
-
 The repositories for these modules have been archived into the Toy Chest, so their
 Forge pages should be badged as `Adoptable`.
 </summary>
 
 {%- for item in badge_adoptable %}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
-{%- endfor %}
+{% endfor -%}
 </details>
-{%- endif %}
+{% endif -%}
 
 
 {% if source_field_problem -%}
@@ -218,11 +216,11 @@ Correct the field for any modules we own, and deprecate as appropriate any modul
 we no longer own.
 </summary>
 
-{%- for item in source_field_problem %}
+{% for item in source_field_problem -%}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
-{%- endfor %}
+{% endfor -%}
 </details>
-{%- endif %}
+{% endif -%}
 """
 
 tm = Template(template)
