@@ -87,7 +87,7 @@ Module repositories should be indicated with the `module` topic. The following
 repositories were detected as Puppet modules, but are missing that topic.
 </summary>
 
-{% for item in tag_module %}
+{% for item in tag_module -%}
 * [puppetlabs/{{ item['name'] }}](https://github.com/puppetlabs/{{ item['name'] }})
 {% endfor %}
 </details>
@@ -105,7 +105,7 @@ following GitHub repositories are missing their support tier topics and should
 have them added.
 </summary>
 
-{% for item in incomplete %}
+{% for item in incomplete -%}
 * [{{ item }}](https://github.com/{{ item }})
 {% endfor %}
 </details>
@@ -123,7 +123,7 @@ explaining what kind of support a user can expect when using that module.
 The following GitHub repositories should have a preamble added to their `README`.
 </summary>
 
-{% for item in unmarked %}
+{% for item in unmarked -%}
 * [{{ item }}](https://github.com/{{ item }})
 {% endfor %}
 </details>
@@ -144,7 +144,7 @@ through to inspect the errors using GitHub's interface and it will offer suggest
 on how to resolve problems.
 </summary>
 
-{% for item in unowned %}
+{% for item in unowned -%}
 * [puppetlabs-{{ item }}](https://github.com/puppetlabs/{{ item }}/blob/-/CODEOWNERS)
 {% endfor %}
 </details>
@@ -160,7 +160,7 @@ Forge module pages should match the topics on their corresponding repositories.
 The following Forge modules should be badged as Supported.
 </summary>
 
-{% for item in badge_supported %}
+{% for item in badge_supported -%}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {% endfor %}
 </details>
@@ -176,7 +176,7 @@ Forge module pages should match the topics on their corresponding repositories.
 The following Forge modules should have the Supported badge removed.
 </summary>
 
-{% for item in badge_unsupported %}
+{% for item in badge_unsupported -%}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {% endfor %}
 </details>
@@ -191,7 +191,7 @@ The repositories for these modules have been archived into the Toy Chest, so the
 Forge pages should be badged as `Adoptable`.
 </summary>
 
-{% for item in badge_adoptable %}
+{% for item in badge_adoptable -%}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {% endfor %}
 </details>
@@ -213,7 +213,7 @@ Correct the field for any modules we own, and deprecate as appropriate any modul
 we no longer own.
 </summary>
 
-{% for item in source_field_problem %}
+{% for item in source_field_problem -%}
 * [puppetlabs-{{ item['name'] }}](https://forge.puppet.com/puppetlabs/{{ item['name'] }})
 {% endfor %}
 </details>
