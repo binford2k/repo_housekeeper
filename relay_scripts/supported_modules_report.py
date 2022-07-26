@@ -117,6 +117,7 @@ have them added.
 
 <details>
 <summary>
+
 Modules in the Puppetlabs namespace have different support expectations. Each module
 should have a properly formatted `README` preamble explaining what kind of support
 a user can expect when using that module.
@@ -136,6 +137,7 @@ The following GitHub repositories should have a preamble added to their `README`
 
 <details>
 <summary>
+
 All public repositories in the `puppetlabs` namespace should have valid `CODEOWNERS`
 clearly showing ownership and responsibilities. This allows us to automatically
 assign pull request reviews and makes it easier to identify teams responsible for
@@ -189,6 +191,7 @@ The following Forge modules should have the Supported badge removed.
 ## Forge: Add Adoptable badge
 <details>
 <summary>
+
 The repositories for these modules have been archived into the Toy Chest, so their
 Forge pages should be badged as `Adoptable`.
 </summary>
